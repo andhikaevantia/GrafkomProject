@@ -3,6 +3,7 @@ package GameEngine.Game;
 import GameEngine.Engine.Graph.Mesh;
 import GameEngine.Engine.Graph.Renderer;
 import GameEngine.Engine.IGameLogic;
+import GameEngine.Engine.MouseInput;
 import GameEngine.Engine.Window;
 import org.joml.Vector3d;
 
@@ -38,7 +39,7 @@ public class Game2 implements IGameLogic {
     }
 
     @Override
-    public void input(Window window) {
+    public void input(Window window, MouseInput mouseInput) {
         if (window.isKeyPressed(GLFW_KEY_UP)) {
             direction = 1;
         } else if (window.isKeyPressed(GLFW_KEY_DOWN)) {
@@ -49,7 +50,7 @@ public class Game2 implements IGameLogic {
     }
 
     @Override
-    public void update() {
+    public void update(MouseInput mouseInput) {
         color += direction * 0.01f;
         if (color > 1) {
             color = 1.0f;
@@ -61,7 +62,7 @@ public class Game2 implements IGameLogic {
     @Override
     public void render(Window window) {
         window.setClearColor(color, color, color, 0.0f);
-        renderer.render(window, mesh);
+        renderer.render(window, mesh,0);
     }
 
     @Override

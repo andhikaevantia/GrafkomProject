@@ -102,7 +102,9 @@ public class Window {
     public boolean isKeyPressed(int keyCode) {
         return glfwGetKey(windowHandle, keyCode) == GLFW_PRESS;
     }
-
+    public boolean isMousePressed(int keyCode){
+        return glfwGetMouseButton(windowHandle,keyCode) == GLFW_PRESS;
+    }
     public boolean windowShouldClose() {
         return glfwWindowShouldClose(windowHandle);
     }
@@ -138,5 +140,8 @@ public class Window {
     public void update() {
         glfwSwapBuffers(windowHandle);
         glfwPollEvents();
+    }
+    public long getWindowHandle() {
+        return windowHandle;
     }
 }

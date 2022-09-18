@@ -5,9 +5,11 @@ import static org.lwjgl.opengl.GL11.*;
 public class GameEngine implements Runnable{
     private final Window window;
     private final IGameLogic gameLogic;
+    private final MouseInput mouseInput;
     public GameEngine(String windowTitle, int width, int height, boolean vSync, IGameLogic gameLogic) throws Exception {
         window = new Window(windowTitle, width, height, vSync);
         this.gameLogic = gameLogic;
+        mouseInput = new MouseInput();
     }
 
     @Override
@@ -23,9 +25,10 @@ public class GameEngine implements Runnable{
     }
     protected void init() throws Exception {
         window.init();
+        mouseInput.init(window);
         gameLogic.init();
     }
-    protected void gameLoop() {
+    protected void gameLoop() throws Exception {
         boolean running = true;
         while (running && !window.windowShouldClose()) {
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -38,11 +41,12 @@ public class GameEngine implements Runnable{
         gameLogic.cleanup();
     }
     protected void input() {
-        gameLogic.input(window);
+        mouseInput.input(window);
+        gameLogic.input(window,mouseInput);
     }
 
-    protected void update() {
-        gameLogic.update();
+    protected void update() throws Exception {
+        gameLogic.update(mouseInput);
     }
 
     protected void render() {

@@ -3,9 +3,9 @@ package GameEngine.Engine;
 public interface IGameLogic {
     void init() throws Exception;
 
-    void input(Window window);
+    void input(Window window,MouseInput mouseInput);
 
-    void update();
+    void update(MouseInput mouseInput) throws Exception;
 
     void render(Window window);
 

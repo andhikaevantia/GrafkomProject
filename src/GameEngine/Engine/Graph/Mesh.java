@@ -4,6 +4,7 @@ import GameEngine.Engine.Window;
 import org.joml.Vector3d;
 import org.lwjgl.system.MemoryUtil;
 
+import java.lang.reflect.Array;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
@@ -92,7 +93,9 @@ public class Mesh {
         glBindVertexArray(0);
         glDeleteVertexArrays(vaoId);
     }
-    public void render(Window window){
-        renderer.render(window,this);
+    public void render(Window window,Integer count_Line){
+        renderer.render(window,this,count_Line);
     }
+
+
 }
