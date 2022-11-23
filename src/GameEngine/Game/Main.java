@@ -18,6 +18,7 @@ import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static GameEngine.Engine.Utils.CreateLine;
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.glfw.GLFW.glfwPollEvents;
@@ -47,8 +48,8 @@ public class Main {
     public static void main(String[] args) throws Exception {
         try {
             boolean vSync = true;
-            IGameLogic gameLogic = new Game();
-            GameEngine gameEng = new GameEngine("GAME", 600, 480, vSync, gameLogic);
+            IGameLogic gameLogic = new Mesh3dPhong();
+            GameEngine gameEng = new GameEngine("GAME", 1920, 1080, vSync, gameLogic);
             gameEng.run();
         } catch (Exception excp) {
             excp.printStackTrace();

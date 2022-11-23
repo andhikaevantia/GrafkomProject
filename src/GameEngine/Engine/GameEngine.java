@@ -1,55 +1,54 @@
 package GameEngine.Engine;
 
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.glfw.GLFW.GLFW_CURSOR_DISABLED;
+import static org.lwjgl.glfw.GLFW.glfwSetInputMode;
+import static org.lwjgl.opengl.GL11C.*;
 
 public class GameEngine implements Runnable{
-    private final Window window;
-    private final IGameLogic gameLogic;
-    private final MouseInput mouseInput;
-    public GameEngine(String windowTitle, int width, int height, boolean vSync, IGameLogic gameLogic) throws Exception {
-        window = new Window(windowTitle, width, height, vSync);
+    private Window window;
+    private IGameLogic gameLogic;
+    private MouseInput mouseInput;
+    public GameEngine(String windowTitle,int width,int height, boolean vSync,
+                      IGameLogic gameLogic){
+        window = new Window(windowTitle,width,height,vSync);
         this.gameLogic = gameLogic;
         mouseInput = new MouseInput();
+
     }
 
     @Override
     public void run() {
-        try {
+        try{
             init();
             gameLoop();
-        } catch (Exception excp) {
+        }catch (Exception excp){
             excp.printStackTrace();
-        } finally {
+        }finally {
             cleanup();
         }
     }
-    protected void init() throws Exception {
+
+    public void init() throws Exception {
         window.init();
-        mouseInput.init(window);
         gameLogic.init();
+        mouseInput.init(window);
     }
-    protected void gameLoop() throws Exception {
+    public void gameLoop() throws Exception {
         boolean running = true;
-        while (running && !window.windowShouldClose()) {
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        while(running && !window.windowShouldClose()){
+            glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
             input();
             update();
             render();
         }
     }
-    protected void cleanup() {
-        gameLogic.cleanup();
-    }
-    protected void input() {
-        mouseInput.input(window);
-        gameLogic.input(window,mouseInput);
-    }
-
-    protected void update() throws Exception {
+    public void cleanup(){gameLogic.cleanup();}
+    public void input(){gameLogic.input(window,mouseInput);mouseInput.input(window);}
+    public void update() throws Exception {
         gameLogic.update(mouseInput);
-    }
 
-    protected void render() {
+    }
+    public void render(){
         gameLogic.render(window);
         window.update();
     }

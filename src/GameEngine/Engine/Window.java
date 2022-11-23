@@ -9,7 +9,7 @@ import java.nio.IntBuffer;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.glfw.GLFW.GLFW_TRUE;
-import static org.lwjgl.opengl.GL11.glClearColor;
+import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryStack.stackPush;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
@@ -32,6 +32,8 @@ public class Window {
         this.height = height;
         this.vSync = vSync;
         this.resized = false;
+
+
     }
     public void init(){
         // Setup an error callback. The default implementation
@@ -52,6 +54,8 @@ public class Window {
         if (windowHandle == NULL) {
             throw new RuntimeException("Failed to create the GLFW window");
         }
+        glfwSetInputMode(windowHandle, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
         // Setup resize callback
         glfwSetFramebufferSizeCallback(windowHandle, (window, width, height) -> {
             this.width = width;
@@ -94,6 +98,9 @@ public class Window {
         glfwShowWindow(windowHandle);
 
         GL.createCapabilities();
+        glEnable(GL_DEPTH_TEST);
+        glPointSize(5);
+
     }
     public void setClearColor(float r, float g, float b, float alpha) {
         glClearColor(r, g, b, alpha);
